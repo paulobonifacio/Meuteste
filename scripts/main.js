@@ -70,9 +70,11 @@ async function getEmotionFromText(text) {
 
     console.log("HF RAW →", data);
 
+    // ❗ Render + HF retornam:
+    // [ [ {label, score}, {label, score}, ... ] ]
     if (!Array.isArray(data) || !Array.isArray(data[0])) {
-      console.error("Unexpected response:", data);
-      return "joy";
+      console.error("⚠ Resposta inesperada do backend:", data);
+      return "joy"; // fallback seguro
     }
 
     const emotions = data[0];
@@ -81,12 +83,11 @@ async function getEmotionFromText(text) {
       item.score > best.score ? item : best
     );
 
-    console.log("Detected Emotion:", topEmotion.label.toLowerCase());
     return topEmotion.label.toLowerCase();
 
   } catch (err) {
-    console.error("Erro no cliente:", err);
-    return "joy";
+    console.error("❌ Erro no cliente:", err);
+    return "joy"; // fallback padrão
   }
 }
 
