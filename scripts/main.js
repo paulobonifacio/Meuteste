@@ -54,11 +54,11 @@ const recommendationContainer = document.getElementById("recommendationCards");
 
 
 // ===================================================================
-// 🔥 GET EMOTION FROM BACKEND (router + modelo público)
+// 🔥 GET EMOTION FROM BACKEND (Render API)
 // ===================================================================
 async function getEmotionFromText(text) {
   try {
-    const response = await fetch("https://meuteste.onrender.com/emotion", {
+    const response = await fetch("https://meuteste-vx51.onrender.com/emotion", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,8 @@ async function fetchRecommendations(genreId) {
   const url = `${TMDB_API_URL}?api_key=${TMDB_API_KEY}&with_genres=${genreId}&sort_by=popularity.desc`;
   const response = await fetch(url);
   const data = await response.json();
-  document.getElementById("resultsLabel").textContent = "Recommendations based on your mood:";
+  document.getElementById("resultsLabel").textContent =
+    "Recommendations based on your mood:";
   displayRecommendations(data.results.slice(0, 4));
 }
 
@@ -198,12 +199,14 @@ async function searchMovies(query) {
   const response = await fetch(url);
   const data = await response.json();
   const filtered = data.results.filter(item => item.poster_path);
-  document.getElementById("resultsLabel").textContent = `Search Results for "${query}"`;
+  document.getElementById("resultsLabel").textContent =
+    `Search Results for "${query}"`;
   displayRecommendations(filtered.slice(0, 6));
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}`);
+  const response =
+    await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}`);
   const data = await response.json();
   document.getElementById("resultsLabel").textContent = "Trending Now";
   displayRecommendations(data.results.slice(0, 6));
